@@ -43,14 +43,28 @@ CREATE TABLE IF NOT EXISTS t_device (
 ```shell
 id(主键，自增), scene_code(字符串类型), scene_name(字符串类型), scene_desc(字符串类型), status(删除标识 0-未删除 1-已删除，字符类型), order(INT类型，排序号)
 
-
+CREATE TABLE t_scene (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    scene_code VARCHAR(50) NOT NULL,
+    scene_name VARCHAR(100) NOT NULL,
+    scene_desc VARCHAR(100) NOT NULL,,
+    status CHAR(1) NOT NULL CHECK (status IN ('0', '1')),
+    order INT DEFAULT 0
+);
 ```
 
 5. 场景内区域表(区域可以是室内楼层或者室外场景，不做层级关系)
 ```shell
 id(主键，自增), area_code(字符串类型), area_name(字符串类型), area_desc(字符串类型), status(删除标识 0-未删除 1-已删除，字符类型), order(INT类型，排序号)
 
-
+CREATE TABLE t_area (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    area_code VARCHAR(50) NOT NULL,
+    area_name VARCHAR(100) NOT NULL,
+    area_desc VARCHAR(100),
+    status CHAR(1) NOT NULL DEFAULT '0' CHECK (status IN ('0', '1')),
+    order INT DEFAULT 0
+);
 ```
 
 6. 点位表
@@ -81,7 +95,11 @@ CREATE TABLE IF NOT EXISTS t_point (
 描述：
 main_point_id(主点位id，INT类型), related_point_id(关联点位id，INT类型)
 
-
+CREATE TABLE t_point_relation (
+    main_point_id INT NOT NULL COMMENT '主点位id',
+    related_point_id INT NOT NULL COMMENT '关联点位id',
+    PRIMARY KEY (main_point_id, related_point_id)
+) COMMENT='点位联动表';
 ```
 
 8. 智能化专题表
@@ -89,12 +107,23 @@ main_point_id(主点位id，INT类型), related_point_id(关联点位id，INT类
 描述:
 id(主键，自增), subject_code(字符串类型), subject_name(字符串类型), subject_desc(INT类型), status(删除标识 0-未删除 1-已删除，字符类型), order(INT类型，排序号)
 
-
+CREATE TABLE t_subject (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT '主键ID，自动增长',
+    subject_code VARCHAR(50) NOT NULL COMMENT '专题代码',
+    subject_name VARCHAR(100) NOT NULL COMMENT '专题名称',
+    subject_desc VARCHAR(100) COMMENT '专题描述',
+    status CHAR(1) NOT NULL DEFAULT '0' CHECK (status IN ('0', '1')) COMMENT '删除标识，0-未删除，1-已删除',
+    order INT DEFAULT 0 COMMENT '排序号'
+) COMMENT='专题表';
 ```
 
 9. 设备点位类型与智能化专题关联表（设备点位类型与智能化专题是多对多关系）
 ```shell
 描述:
-subject_id(字符串类型), device_point_type_id(字符串类型)
+subject_id(INT类型), device_point_type_id(INT类型)
 
+CREATE TABLE t_subject_device_relation (
+    subject_id INT NOT NULL COMMENT '智能化专题ID',
+    device_point_type_id INT NOT NULL COMMENT '设备点位类型ID'
+) COMMENT='智能化专题与设备点位类型关联表';
 ```
