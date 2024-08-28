@@ -49,6 +49,10 @@ spring:
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000
       #stat-view-servlet.url-pattern: /admin/druid/*
 
+  data:
+    mongodb:
+      uri: mongodb://qingyanjiu:19831226lc@192.168.0.122:27017/database?authSource=point-tool
+
 # druid管理监控页面的一些配置
 rj-druid-manage:
   allow:                        # 访问druid监控页面的IP白名单

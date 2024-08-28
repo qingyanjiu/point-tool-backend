@@ -48,6 +48,9 @@ spring:
         # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000
         #stat-view-servlet.url-pattern: /admin/druid/*
+  data:
+    mongodb:
+      uri: mongodb://qingyanjiu:19831226lc@192.168.0.122:27017/database?authSource=point-tool
 
 # druid管理监控页面的一些配置
 rj-druid-manage:
