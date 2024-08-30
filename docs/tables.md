@@ -14,12 +14,12 @@ CREATE TABLE t_deivce_point_type (
 2. 设备元数据表
 ```shell
 描述：
-id(主键，自增), deivce_point_type_id, deivce_point_type_code(字符串类型), device_metadata(设备元数据, text类型, JSON字符串), version(元数据版本号，非空，数字类型), status(删除标识 0-未删除 1-已删除，字符类型)
+id(主键，自增), device_point_type_id, device_point_type_code(字符串类型), device_metadata(设备元数据, text类型, JSON字符串), version(元数据版本号，非空，数字类型), status(删除标识 0-未删除 1-已删除，字符类型)
 同一种类型的设备元数据，一般来讲，在录入点位时，取最新版本的元数据作为生效数据
 
 CREATE TABLE t_device_metadata (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT '唯一标识符，自动递增',
-    deivce_point_type INT NOT NULL COMMENT '设备类型id',
+    device_point_type_code INT NOT NULL COMMENT '设备类型id',
     device_metadata TEXT NOT NULL COMMENT '设备元数据，JSON字符串',
     version INT NOT NULL COMMENT '元数据版本号，非空',
     status CHAR(1) NOT NULL DEFAULT '0' COMMENT '删除标识，0-未删除，1-已删除'
